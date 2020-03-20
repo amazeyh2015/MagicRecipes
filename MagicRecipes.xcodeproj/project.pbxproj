@@ -513,7 +513,7 @@
 			repositoryURL = "https://github.com/amazeyh2015/EasyKeyboard.git";
 			requirement = {
 				kind = exactVersion;
-				version = 1.0.0;
+				version = 1.0.2;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */

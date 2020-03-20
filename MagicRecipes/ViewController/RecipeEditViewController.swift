@@ -27,7 +27,6 @@ class RecipeEditViewController: UIViewController {
         super.viewDidLoad()
 
         navigationItem.title = isEditing ? "编辑菜谱" : "创建菜谱"
-        navigationItem.leftBarButtonItem = UIBarButtonItem.cancel(target: self, action: #selector(cancelButtonClicked))
         navigationItem.rightBarButtonItem = UIBarButtonItem.done(target: self, action: #selector(doneButtonClicked))
         
         nameHeaderView = RecipeHeaderView()
@@ -69,14 +68,12 @@ class RecipeEditViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        KeyboardManager.shared.addWillShowObserver(self)
-        KeyboardManager.shared.addWillHideObserver(self)
+        KeyboardManager.shared.addObserver(self)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        KeyboardManager.shared.removeWillShowObserver(self)
-        KeyboardManager.shared.removeWillHideObserver(self)
+        KeyboardManager.shared.removeObserver(self)
     }
     
     deinit {
@@ -103,10 +100,6 @@ class RecipeEditViewController: UIViewController {
         return [section0, section1, section2]
     }
     
-    @objc private func cancelButtonClicked() {
-        dismiss(animated: true, completion: nil)
-    }
-    
     @objc private func doneButtonClicked() {
         // check content
         if recipe.name.isEmpty {
@@ -122,7 +115,7 @@ class RecipeEditViewController: UIViewController {
             RecipeStore.addRecipe(recipe)
         }
         // dismiss view controller
-        dismiss(animated: true, completion: nil)
+        navigationController?.popViewController(animated: true)
     }
     
     private func addImageCellSelected() {
@@ -172,6 +165,13 @@ extension RecipeEditViewController: KeyboardObservering {
         tableView.contentInset.bottom = keyboardInfo.endFrame.height
     }
     
+    func keyboardDidShow(keyboardInfo: KeyboardInfo) {
+        if detailsCell.isEditing {
+            let rect = detailsCell.convert(detailsCell.detailsRect, to: tableView)
+            tableView.scrollRectToVisible(rect, animated: true)
+        }
+    }
+    
     func keyboardWillHide(keyboardInfo: KeyboardInfo) {
         tableView.contentInset.bottom = 0
     }
@@ -188,5 +188,13 @@ extension RecipeEditViewController: RecipeDetailsCellDelegate {
     
     func recipeDetailsCell(_ cell: RecipeDetailsCell, detailsDidChange details: String) {
         recipe.details = details
+    }
+    
+    func recipeDetailsCellDidBeginEditing(_ cell: RecipeDetailsCell) {
+        cell.isEditing = true
+    }
+    
+    func recipeDetailsCellDidEndEditing(_ cell: RecipeDetailsCell) {
+        cell.isEditing = false
     }
 }

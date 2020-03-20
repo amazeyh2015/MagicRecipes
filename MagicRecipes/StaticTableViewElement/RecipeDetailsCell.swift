@@ -12,6 +12,15 @@ import StaticTableView
 protocol RecipeDetailsCellDelegate: AnyObject {
     
     func recipeDetailsCell(_ cell: RecipeDetailsCell, detailsDidChange details: String)
+    func recipeDetailsCellDidBeginEditing(_ cell: RecipeDetailsCell)
+    func recipeDetailsCellDidEndEditing(_ cell: RecipeDetailsCell)
+}
+
+extension RecipeDetailsCellDelegate {
+    
+    func recipeDetailsCell(_ cell: RecipeDetailsCell, detailsDidChange details: String) {}
+    func recipeDetailsCellDidBeginEditing(_ cell: RecipeDetailsCell) {}
+    func recipeDetailsCellDidEndEditing(_ cell: RecipeDetailsCell) {}
 }
 
 class RecipeDetailsCell: StaticTableViewCell {
@@ -25,6 +34,12 @@ class RecipeDetailsCell: StaticTableViewCell {
             textView.text = details
             placeholderLabel.isHidden = !details.isEmpty
         }
+    }
+    
+    var detailsRect: CGRect {
+        let origin = textView.frame.origin
+        let size = textView.contentSize
+        return CGRect(origin: origin, size: size)
     }
     
     weak var delegate: RecipeDetailsCellDelegate?
@@ -79,5 +94,13 @@ extension RecipeDetailsCell: UITextViewDelegate {
     func textViewDidChange(_ textView: UITextView) {
         placeholderLabel.isHidden = !textView.text.isEmpty
         delegate?.recipeDetailsCell(self, detailsDidChange: textView.text)
+    }
+    
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        delegate?.recipeDetailsCellDidBeginEditing(self)
+    }
+    
+    func textViewDidEndEditing(_ textView: UITextView) {
+        delegate?.recipeDetailsCellDidEndEditing(self)
     }
 }

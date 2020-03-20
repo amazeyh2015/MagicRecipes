@@ -66,8 +66,7 @@ class RecipeDetailViewController: UIViewController {
         let vc = RecipeEditViewController()
         vc.recipe = recipe
         vc.isEditing = true
-        let nc = UINavigationController(rootViewController: vc)
-        present(nc, animated: true, completion: nil)
+        navigationController?.pushViewController(vc, animated: true)
     }
     
     @objc func recipeDidUpdate(_ notification: Notification) {

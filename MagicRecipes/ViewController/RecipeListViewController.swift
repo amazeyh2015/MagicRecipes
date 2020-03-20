@@ -49,8 +49,7 @@ class RecipeListViewController: UIViewController {
     
     @objc func addButtonClicked() {
         let vc = RecipeEditViewController()
-        let nc = UINavigationController(rootViewController: vc)
-        present(nc, animated: true, completion: nil)
+        navigationController?.pushViewController(vc, animated: true)
     }
     
     private func showDeleteRecipeAlert(_ recipe: Recipe) {
