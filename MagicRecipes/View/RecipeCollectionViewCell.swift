@@ -42,7 +42,7 @@ class RecipeCollectionViewCell: UICollectionViewCell {
         nameLabel = UILabel()
         nameLabel.frame.size.height = RecipeCollectionViewCell.nameLabelHeight
         nameLabel.font = UIFont.systemFont(ofSize: 16)
-        nameLabel.textColor = UIColor.black
+        nameLabel.textColor = UIColor.label
         contentView.addSubview(nameLabel)
         
         contentView.addLongPressGestureRecognizer(target: self, action: #selector(contentViewLongPressed(_:)))

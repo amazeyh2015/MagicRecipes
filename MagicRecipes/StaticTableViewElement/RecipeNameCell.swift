@@ -34,7 +34,7 @@ class RecipeNameCell: StaticTableViewCell {
         textField.frame.size.height = 50
         textField.placeholder = "名字尽可能简洁"
         textField.font = UIFont.systemFont(ofSize: 16)
-        textField.textColor = UIColor.black
+        textField.textColor = UIColor.label
         textField.addTarget(self, action: #selector(textFieldEditingChanged), for: .editingChanged)
         contentView.addSubview(textField)
     }

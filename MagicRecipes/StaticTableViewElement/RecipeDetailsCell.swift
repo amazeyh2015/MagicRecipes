@@ -52,7 +52,7 @@ class RecipeDetailsCell: StaticTableViewCell {
         
         placeholderLabel = UILabel()
         placeholderLabel.font = UIFont.systemFont(ofSize: 16)
-        placeholderLabel.textColor = UIColor.lightGray
+        placeholderLabel.textColor = UIColor.placeholderText
         placeholderLabel.text = "做法尽可能详细"
         placeholderLabel.sizeToFit()
         contentView.addSubview(placeholderLabel)
@@ -60,7 +60,7 @@ class RecipeDetailsCell: StaticTableViewCell {
         textView = UITextView()
         textView.backgroundColor = UIColor.clear
         textView.font = UIFont.systemFont(ofSize: 16)
-        textView.textColor = UIColor.black
+        textView.textColor = UIColor.label
         textView.textContainer.lineFragmentPadding = 0
         textView.textContainerInset = .zero
         textView.delegate = self

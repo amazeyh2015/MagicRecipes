@@ -24,7 +24,7 @@ class RecipeListViewController: BaseViewController {
         recipeListLayout.sectionInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
         
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: recipeListLayout)
-        collectionView.backgroundColor = .white
+        collectionView.backgroundColor = .systemBackground
         collectionView.register(RecipeCollectionViewCell.self, forCellWithReuseIdentifier: "cell")
         collectionView.dataSource = self
         collectionView.delegate = self

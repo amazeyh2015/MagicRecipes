@@ -28,7 +28,7 @@ class RecipeHeaderView: StaticTableViewHeader {
         
         titleLabel = UILabel()
         titleLabel.font = UIFont.systemFont(ofSize: 14)
-        titleLabel.textColor = UIColor.darkGray
+        titleLabel.textColor = UIColor.label
         titleLabel.numberOfLines = 0
         addSubview(titleLabel)
     }

@@ -22,7 +22,7 @@ class RecipeDisplayDetailsCell: StaticTableViewCell {
         selectionStyle = .none
         
         textLabel?.font = UIFont.systemFont(ofSize: 16)
-        textLabel?.textColor = .black
+        textLabel?.textColor = .label
         textLabel?.numberOfLines = 0
     }
     
