@@ -197,6 +197,12 @@ extension RecipeEditViewController: RecipeDetailsCellDelegate {
         recipe.details = details
     }
     
+    func recipeDetailsCell(_ cell: RecipeDetailsCell, detailsHeightDidChange height: CGFloat) {
+        cell.sizeToFit()
+        let rect = detailsCell.convert(detailsCell.detailsRect, to: tableView)
+        tableView.scrollRectToVisible(rect, animated: true)
+    }
+    
     func recipeDetailsCellDidBeginEditing(_ cell: RecipeDetailsCell) {
         cell.isEditing = true
     }

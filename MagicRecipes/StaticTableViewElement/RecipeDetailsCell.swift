@@ -12,6 +12,7 @@ import StaticTableView
 protocol RecipeDetailsCellDelegate: AnyObject {
     
     func recipeDetailsCell(_ cell: RecipeDetailsCell, detailsDidChange details: String)
+    func recipeDetailsCell(_ cell: RecipeDetailsCell, detailsHeightDidChange height: CGFloat)
     func recipeDetailsCellDidBeginEditing(_ cell: RecipeDetailsCell)
     func recipeDetailsCellDidEndEditing(_ cell: RecipeDetailsCell)
 }
@@ -19,6 +20,7 @@ protocol RecipeDetailsCellDelegate: AnyObject {
 extension RecipeDetailsCellDelegate {
     
     func recipeDetailsCell(_ cell: RecipeDetailsCell, detailsDidChange details: String) {}
+    func recipeDetailsCell(_ cell: RecipeDetailsCell, detailsHeightDidChange height: CGFloat) {}
     func recipeDetailsCellDidBeginEditing(_ cell: RecipeDetailsCell) {}
     func recipeDetailsCellDidEndEditing(_ cell: RecipeDetailsCell) {}
 }
@@ -32,7 +34,7 @@ class RecipeDetailsCell: StaticTableViewCell {
     var details: String = "" {
         didSet {
             textView.text = details
-            placeholderLabel.isHidden = !details.isEmpty
+            textViewDidChange(textView)
         }
     }
     
@@ -56,7 +58,6 @@ class RecipeDetailsCell: StaticTableViewCell {
         contentView.addSubview(placeholderLabel)
         
         textView = UITextView()
-        textView.frame.size.height = 300
         textView.backgroundColor = UIColor.clear
         textView.font = UIFont.systemFont(ofSize: 16)
         textView.textColor = UIColor.black
@@ -70,7 +71,14 @@ class RecipeDetailsCell: StaticTableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func sizeToFit() {
+        frame.size.height = textView.frame.maxY + virticalSpace
+    }
+    
     override func sizeThatFits(_ size: CGSize) -> CGSize {
+        let layoutMargins = contentView.layoutMargins
+        textView.frame.size.width = contentView.frame.width - layoutMargins.left - layoutMargins.right
+        textView.frame.size.height = textView.contentSize.height
         let height = textView.frame.height + virticalSpace * 2
         return CGSize(width: size.width, height: height)
     }
@@ -85,14 +93,25 @@ class RecipeDetailsCell: StaticTableViewCell {
         
         textView.frame.origin.x = layoutMargins.left
         textView.frame.origin.y = virticalSpace
-        textView.frame.size.width = frame.width - layoutMargins.left - layoutMargins.right
+    }
+    
+    private func updateTextViewHeight() {
+        if textView.frame.height != textView.contentSize.height {
+            textView.frame.size.height = textView.contentSize.height
+            delegate?.recipeDetailsCell(self, detailsHeightDidChange: textView.frame.height)
+        }
+    }
+    
+    private func updatePlaceholderLabelStatus() {
+        placeholderLabel.isHidden = !textView.text.isEmpty
     }
 }
 
 extension RecipeDetailsCell: UITextViewDelegate {
     
     func textViewDidChange(_ textView: UITextView) {
-        placeholderLabel.isHidden = !textView.text.isEmpty
+        updatePlaceholderLabelStatus()
+        updateTextViewHeight()
         delegate?.recipeDetailsCell(self, detailsDidChange: textView.text)
     }
     
