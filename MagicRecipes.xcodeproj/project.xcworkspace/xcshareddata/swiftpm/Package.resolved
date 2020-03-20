@@ -1,0 +1,25 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "EasyKeyboard",
+        "repositoryURL": "https://github.com/amazeyh2015/EasyKeyboard.git",
+        "state": {
+          "branch": null,
+          "revision": "bccb92e2fab5a6bc0bb2777b4191cb7c08a2b6a7",
+          "version": "1.0.0"
+        }
+      },
+      {
+        "package": "StaticTableView",
+        "repositoryURL": "https://github.com/amazeyh2015/StaticTableView.git",
+        "state": {
+          "branch": null,
+          "revision": "d889e2dae37bb5fb0fbce53adb178ce43962423a",
+          "version": "1.0.1"
+        }
+      }
+    ]
+  },
+  "version": 1
+}
