@@ -8,7 +8,7 @@
 
 import UIKit
 
-class RecipeListViewController: UIViewController {
+class RecipeListViewController: BaseViewController {
     
     private var recipeListLayout: RecipeListLayout!
     private var collectionView: UICollectionView!
@@ -19,7 +19,6 @@ class RecipeListViewController: UIViewController {
         
         navigationItem.title = "菜谱"
         navigationItem.rightBarButtonItem = UIBarButtonItem.add(target: self, action: #selector(addButtonClicked))
-        navigationItem.backBarButtonItem = UIBarButtonItem.back()
         
         recipeListLayout = RecipeListLayout()
         recipeListLayout.sectionInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)

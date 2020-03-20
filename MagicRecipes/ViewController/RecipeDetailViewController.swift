@@ -9,7 +9,7 @@
 import UIKit
 import StaticTableView
 
-class RecipeDetailViewController: UIViewController {
+class RecipeDetailViewController: BaseViewController {
     
     private var imagesCell: RecipeDisplayImagesCell!
     private var detailsCell: RecipeDisplayDetailsCell!
@@ -75,8 +75,10 @@ class RecipeDetailViewController: UIViewController {
         }
         if updatedRecipe == recipe {
             recipe = updatedRecipe
+            navigationItem.title = recipe.name
             updateImagesCellContent()
             updateDetailsCellContent()
+            tableView.reloadData()
         }
     } 
     

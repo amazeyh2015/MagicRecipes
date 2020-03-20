@@ -10,7 +10,7 @@ import UIKit
 import StaticTableView
 import EasyKeyboard
 
-class RecipeEditViewController: UIViewController {
+class RecipeEditViewController: BaseViewController {
     
     private var nameHeaderView: RecipeHeaderView!
     private var imagesHeaderView: RecipeHeaderView!
@@ -30,13 +30,13 @@ class RecipeEditViewController: UIViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem.done(target: self, action: #selector(doneButtonClicked))
         
         nameHeaderView = RecipeHeaderView()
-        nameHeaderView.title = "名字"
+        nameHeaderView.title = "名字(必填)"
         
         imagesHeaderView = RecipeHeaderView()
-        imagesHeaderView.title = "图片"
+        imagesHeaderView.title = "图片(必填)"
         
         detailsHeaderView = RecipeHeaderView()
-        detailsHeaderView.title = "做法"
+        detailsHeaderView.title = "做法(选填)"
         
         nameCell = RecipeNameCell()
         nameCell.name = recipe.name
@@ -62,6 +62,7 @@ class RecipeEditViewController: UIViewController {
         detailsCell.delegate = self
         
         tableView = StaticTableView(style: .grouped)
+        tableView.separatorStyle = .none
         tableView.sections = makeSections()
         view = tableView
     }
@@ -104,6 +105,12 @@ class RecipeEditViewController: UIViewController {
         // check content
         if recipe.name.isEmpty {
             let ac = UIAlertController(title: nil, message: "名字不能为空", preferredStyle: .alert)
+            ac.addAction(title: "好的", style: .cancel, handler: nil)
+            present(ac, animated: true, completion: nil)
+            return
+        }
+        if recipe.imageURLs.isEmpty {
+            let ac = UIAlertController(title: nil, message: "图片不能为空", preferredStyle: .alert)
             ac.addAction(title: "好的", style: .cancel, handler: nil)
             present(ac, animated: true, completion: nil)
             return
