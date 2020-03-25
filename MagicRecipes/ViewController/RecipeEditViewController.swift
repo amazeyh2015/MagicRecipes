@@ -128,9 +128,6 @@ class RecipeEditViewController: BaseViewController {
     private func addImageCellSelected() {
         let options = ImagePickerOptions()
         options.allowsEditing = true
-        options.presentCompletionHandler = { [weak addImageCell] in
-            addImageCell?.setSelected(false, animated: false)
-        }
         options.successHandler = { [weak self] imageURL in
             self?.didSelectImage(imageURL)
         }
@@ -157,6 +154,7 @@ class RecipeEditViewController: BaseViewController {
                     self.recipe.imageURLs = [imageURL]
                     self.imageCell.image = image
                     self.tableView.sections = self.makeSections()
+                    self.tableView.updateLayout()
                 }
             })
         }
@@ -166,6 +164,7 @@ class RecipeEditViewController: BaseViewController {
         recipe.imageURLs = []
         imageCell.image = nil
         tableView.sections = makeSections()
+        tableView.updateLayout()
     }
 }
 

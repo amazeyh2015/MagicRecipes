@@ -20,7 +20,7 @@ class RecipeAddImageCell: StaticTableViewCell {
         backgroundColor = .tertiarySystemBackground
         
         backgroundView = UIView()
-        backgroundView.backgroundColor = .systemFill
+        backgroundView.backgroundColor = .tertiarySystemFill
         addSubview(backgroundView)
         
         backgroundView.isHidden = true
@@ -38,11 +38,15 @@ class RecipeAddImageCell: StaticTableViewCell {
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {
-        backgroundView.isHidden = !selected
-    }
-    
-    override func setHighlighted(_ highlighted: Bool, animated: Bool) {
-        backgroundView.isHidden = !highlighted
+        if selected {
+            backgroundView.isHidden = false
+            UIView.animate(withDuration: 1, animations: { 
+                self.backgroundView.alpha = 0
+            }) { _ in
+                self.backgroundView.isHidden = true
+                self.backgroundView.alpha = 1
+            }
+        }
     }
     
     override func layoutSubviews() {
