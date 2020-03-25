@@ -33,15 +33,17 @@ class RecipeImagesCell: StaticTableViewCell {
     }
     
     init() {
-        super.init(style: .default, reuseIdentifier: nil)
-        selectionStyle = .none
+        super.init(frame: .zero)
+        
+        backgroundColor = .systemBackground
+        preservesSuperviewLayoutMargins = true
         
         scrollView = UIScrollView()
         scrollView.frame.size.height = 160
         scrollView.showsHorizontalScrollIndicator = false
         scrollView.showsVerticalScrollIndicator = false
         scrollView.contentSize.height = scrollView.frame.height
-        contentView.addSubview(scrollView)
+        addSubview(scrollView)
         
         for _ in 0...maxImagesCount {
             let imageView = UIImageView()
@@ -77,21 +79,16 @@ class RecipeImagesCell: StaticTableViewCell {
         }
     }
     
-    override func sizeThatFits(_ size: CGSize) -> CGSize {
-        let height = scrollView.frame.height + virticalSpace * 2
-        return CGSize(width: size.width, height: height)
+    override func heightInTableView(_ tableView: StaticTableView) -> CGFloat {
+        return scrollView.frame.height + virticalSpace * 2
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        let layoutMargins = contentView.layoutMargins
-        
         scrollView.frame.origin.x = layoutMargins.left
         scrollView.frame.origin.y = virticalSpace
         scrollView.frame.size.width = frame.width - layoutMargins.left - layoutMargins.right
-        
-        separatorInset = .zero
     }
     
     @objc func imageViewTapped(_ sender: UITapGestureRecognizer) {

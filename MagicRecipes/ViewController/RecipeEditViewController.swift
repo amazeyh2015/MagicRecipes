@@ -44,15 +44,15 @@ class RecipeEditViewController: BaseViewController {
         
         imageCell = RecipeImageCell()
         ImageManager.shared.loadImage(at: recipe.imageURLs.first) { (_, image, _) in
-            self.imageCell.coverImage = image
+            self.imageCell.image = image
         }
-        imageCell.selectAction = { [unowned self] in
+        imageCell.didSelectAction = { [unowned self] in
             self.view.endEditing(true)
             self.imageCellSelected() 
         }
         
         addImageCell = RecipeAddImageCell()
-        addImageCell.selectAction = { [unowned self] in
+        addImageCell.didSelectAction = { [unowned self] in
             self.view.endEditing(true)
             self.addImageCellSelected()
         }
@@ -61,8 +61,8 @@ class RecipeEditViewController: BaseViewController {
         detailsCell.details = recipe.details
         detailsCell.delegate = self
         
-        tableView = StaticTableView(style: .grouped)
-        tableView.separatorStyle = .none
+        tableView = StaticTableView()
+        tableView.backgroundColor = .systemGroupedBackground
         tableView.sections = makeSections()
         view = tableView
     }
@@ -83,19 +83,19 @@ class RecipeEditViewController: BaseViewController {
     
     private func makeSections() -> [StaticTableViewSection] {
         let section0 = StaticTableViewSection()
-        section0.headerView = nameHeaderView
+        section0.header = nameHeaderView
         section0.cells = [nameCell]
         
         let section1 = StaticTableViewSection()
-        section1.headerView = imagesHeaderView
-        if imageCell.coverImage == nil {
+        section1.header = imagesHeaderView
+        if imageCell.image == nil {
             section1.cells = [addImageCell]
         } else {
             section1.cells = [imageCell]
         }
         
         let section2 = StaticTableViewSection()
-        section2.headerView = detailsHeaderView
+        section2.header = detailsHeaderView
         section2.cells = [detailsCell]
         
         return [section0, section1, section2]
@@ -128,12 +128,17 @@ class RecipeEditViewController: BaseViewController {
     private func addImageCellSelected() {
         let options = ImagePickerOptions()
         options.allowsEditing = true
-        options.successHandler = didSelectImage
+        options.presentCompletionHandler = { [weak addImageCell] in
+            addImageCell?.setSelected(false, animated: false)
+        }
+        options.successHandler = { [weak self] imageURL in
+            self?.didSelectImage(imageURL)
+        }
         ImagePicker.shared.pickImage(options: options, inViewController: self)
     }
     
     private func imageCellSelected() {
-        guard let image = imageCell.coverImage else {
+        guard let image = imageCell.image else {
             return
         }
         
@@ -150,9 +155,8 @@ class RecipeEditViewController: BaseViewController {
             ImageManager.shared.loadImage(at: imageURL, completionHandler: { (imageURL, image, error) in
                 if let imageURL = imageURL, let image = image {
                     self.recipe.imageURLs = [imageURL]
-                    self.imageCell.coverImage = image
+                    self.imageCell.image = image
                     self.tableView.sections = self.makeSections()
-                    self.tableView.reloadData()
                 }
             })
         }
@@ -160,9 +164,8 @@ class RecipeEditViewController: BaseViewController {
     
     private func deleteImage(_ image: UIImage) {
         recipe.imageURLs = []
-        imageCell.coverImage = nil
+        imageCell.image = nil
         tableView.sections = makeSections()
-        tableView.reloadData()
     }
 }
 
@@ -198,16 +201,8 @@ extension RecipeEditViewController: RecipeDetailsCellDelegate {
     }
     
     func recipeDetailsCell(_ cell: RecipeDetailsCell, detailsHeightDidChange height: CGFloat) {
-        cell.sizeToFit()
-        let rect = detailsCell.convert(detailsCell.detailsRect, to: tableView)
+        tableView.updateLayoutForElement(cell)
+        let rect = detailsCell.convert(cell.detailsRect, to: tableView)
         tableView.scrollRectToVisible(rect, animated: true)
-    }
-    
-    func recipeDetailsCellDidBeginEditing(_ cell: RecipeDetailsCell) {
-        cell.isEditing = true
-    }
-    
-    func recipeDetailsCellDidEndEditing(_ cell: RecipeDetailsCell) {
-        cell.isEditing = false
     }
 }

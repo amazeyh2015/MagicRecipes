@@ -11,22 +11,43 @@ import StaticTableView
 
 class RecipeDisplayDetailsCell: StaticTableViewCell {
     
+    private var detailsLabel: UILabel!
+    private var virticalSpace: CGFloat = 15
+    
     var details: String = "" {
         didSet {
-            textLabel?.text = details
+            detailsLabel.text = details
         }
     }
     
     init() {
-        super.init(style: .default, reuseIdentifier: nil)
-        selectionStyle = .none
+        super.init(frame: .zero)
         
-        textLabel?.font = UIFont.systemFont(ofSize: 16)
-        textLabel?.textColor = .label
-        textLabel?.numberOfLines = 0
+        backgroundColor = .systemBackground
+        preservesSuperviewLayoutMargins = true
+        
+        detailsLabel = UILabel()
+        detailsLabel.font = UIFont.systemFont(ofSize: 16)
+        detailsLabel.textColor = .label
+        detailsLabel.numberOfLines = 0
+        addSubview(detailsLabel)
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func heightInTableView(_ tableView: StaticTableView) -> CGFloat {
+        let maxDetailsLabelWidth = frame.width - layoutMargins.left - layoutMargins.right
+        let maxDetailsLabelSize = CGSize(width: maxDetailsLabelWidth, height: 9999)
+        detailsLabel.frame.size = detailsLabel.sizeThatFits(maxDetailsLabelSize)
+        return detailsLabel.frame.height + virticalSpace * 2
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        detailsLabel.frame.origin.x = layoutMargins.left
+        detailsLabel.frame.origin.y = virticalSpace
     }
 }

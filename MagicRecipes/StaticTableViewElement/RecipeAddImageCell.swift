@@ -11,20 +11,43 @@ import StaticTableView
 
 class RecipeAddImageCell: StaticTableViewCell {
     
+    private var backgroundView: UIView!
+    private var titleLabel: UILabel!
+    
     init() {
-        super.init(style: .default, reuseIdentifier: nil)
+        super.init(frame: .zero)
         
-        textLabel?.font = UIFont.systemFont(ofSize: 16)
-        textLabel?.textColor = .systemBlue
-        textLabel?.textAlignment = .center
-        textLabel?.text = "添加图片"
+        backgroundColor = .systemBackground
+        
+        backgroundView = UIView()
+        backgroundView.backgroundColor = .systemFill
+        addSubview(backgroundView)
+        
+        backgroundView.isHidden = true
+        
+        titleLabel = UILabel()
+        titleLabel.font = UIFont.systemFont(ofSize: 16)
+        titleLabel.textColor = .systemBlue
+        titleLabel.textAlignment = .center
+        titleLabel.text = "添加图片"
+        addSubview(titleLabel)
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func sizeThatFits(_ size: CGSize) -> CGSize {
-        return CGSize(width: size.width, height: 50)
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        backgroundView.isHidden = !selected
+    }
+    
+    override func setHighlighted(_ highlighted: Bool, animated: Bool) {
+        backgroundView.isHidden = !highlighted
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        backgroundView.frame = bounds
+        titleLabel.frame = bounds
     }
 }

@@ -17,6 +17,7 @@ class ImagePickerOptions {
     
     var mediaTypes: [ImagePickerMediaType] = [.image]
     var allowsEditing: Bool = false
+    var presentCompletionHandler: (() -> Void)?
     var successHandler: ((URL) -> Void)?
     var failureHandler: ((Error) -> Void)?
 }

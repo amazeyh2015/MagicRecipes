@@ -37,7 +37,7 @@ class RecipeHeaderView: StaticTableViewHeader {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func height(in tableView: UITableView) -> CGFloat {
+    override func heightInTableView(_ tableView: StaticTableView) -> CGFloat {
         let tableViewWidth = tableView.frame.width
         let layoutMargins = tableView.layoutMargins
         let titleLabelMaxWidth = tableViewWidth - layoutMargins.left - layoutMargins.right

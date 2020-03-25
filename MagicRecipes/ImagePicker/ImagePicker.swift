@@ -21,7 +21,7 @@ class ImagePicker: NSObject {
         ipc.sourceType = .photoLibrary
         ipc.allowsEditing = options.allowsEditing
         ipc.delegate = self
-        vc.present(ipc, animated: true, completion: nil)
+        vc.present(ipc, animated: true, completion: options.presentCompletionHandler)
     }
 }
 

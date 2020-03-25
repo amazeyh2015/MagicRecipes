@@ -27,8 +27,10 @@ class RecipeNameCell: StaticTableViewCell {
     weak var delegate: RecipeNameCellDelegate?
     
     init() {
-        super.init(style: .default, reuseIdentifier: nil)
-        selectionStyle = .none
+        super.init(frame: .zero)
+        
+        backgroundColor = .systemBackground
+        preservesSuperviewLayoutMargins = true
         
         textField = UITextField()
         textField.frame.size.height = 50
@@ -36,24 +38,22 @@ class RecipeNameCell: StaticTableViewCell {
         textField.font = UIFont.systemFont(ofSize: 16)
         textField.textColor = UIColor.label
         textField.addTarget(self, action: #selector(textFieldEditingChanged), for: .editingChanged)
-        contentView.addSubview(textField)
+        addSubview(textField)
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func sizeThatFits(_ size: CGSize) -> CGSize {
-        return CGSize(width: size.width, height: textField.frame.height)
+    override func heightInTableView(_ tableView: StaticTableView) -> CGFloat {
+        return textField.frame.height
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        let layoutMargins = contentView.layoutMargins
-        
         textField.frame.origin.x = layoutMargins.left
-        textField.frame.size.width = contentView.frame.width - layoutMargins.left - layoutMargins.right
+        textField.frame.size.width = frame.width - layoutMargins.left - layoutMargins.right
     }
     
     @objc private func textFieldEditingChanged() {

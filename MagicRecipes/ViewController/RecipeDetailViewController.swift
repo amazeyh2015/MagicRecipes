@@ -38,10 +38,11 @@ class RecipeDetailViewController: BaseViewController {
         detailsCell = RecipeDisplayDetailsCell()
         updateDetailsCellContent()
         
-        tableView = StaticTableView(style: .plain)
-        tableView.separatorStyle = .none
+        tableView = StaticTableView()
         tableView.sections = makeSections()
-        view = tableView
+        view.addSubview(tableView)
+        
+        tableView.edges(equalTo: view)
          
         NotificationCenter.default.addObserver(self, selector: #selector(recipeDidUpdate(_:)), name: .RecipeDidUpdate, object: nil)
     }
@@ -78,7 +79,7 @@ class RecipeDetailViewController: BaseViewController {
             navigationItem.title = recipe.name
             updateImagesCellContent()
             updateDetailsCellContent()
-            tableView.reloadData()
+            tableView.updateLayout()
         }
     } 
     
