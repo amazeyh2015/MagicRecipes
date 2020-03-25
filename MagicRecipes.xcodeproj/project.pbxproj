@@ -497,7 +497,7 @@
 			repositoryURL = "https://github.com/amazeyh2015/StaticTableView.git";
 			requirement = {
 				kind = exactVersion;
-				version = 1.1.1;
+				version = 1.1.2;
 			};
 		};
 		569769302419FC4700E3B974 /* XCRemoteSwiftPackageReference "EasyKeyboard" */ = {
