@@ -17,7 +17,7 @@ class RecipeAddImageCell: StaticTableViewCell {
     init() {
         super.init(frame: .zero)
         
-        backgroundColor = .systemBackground
+        backgroundColor = .tertiarySystemBackground
         
         backgroundView = UIView()
         backgroundView.backgroundColor = .systemFill

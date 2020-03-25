@@ -22,7 +22,7 @@ class RecipeImageCell: StaticTableViewCell {
     init() {
         super.init(frame: .zero)
         
-        backgroundColor = .systemBackground
+        backgroundColor = .tertiarySystemBackground
         
         imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill

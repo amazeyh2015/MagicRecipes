@@ -51,7 +51,7 @@ class RecipeDetailsCell: StaticTableViewCell {
     init() {
         super.init(frame: .zero)
         
-        backgroundColor = .systemBackground
+        backgroundColor = .tertiarySystemBackground
         preservesSuperviewLayoutMargins = true
         
         placeholderLabel = UILabel()
@@ -62,6 +62,7 @@ class RecipeDetailsCell: StaticTableViewCell {
         addSubview(placeholderLabel)
         
         textView = UITextView()
+        textView.frame.size.height = 20
         textView.backgroundColor = UIColor.clear
         textView.font = UIFont.systemFont(ofSize: 16)
         textView.textColor = UIColor.label
@@ -98,7 +99,7 @@ extension RecipeDetailsCell: UITextViewDelegate {
         placeholderLabel.isHidden = !textView.text.isEmpty
         guard let delegate = delegate else { return }
         if textView.frame.height != textView.contentSize.height {
-            delegate.recipeDetailsCell(self, detailsHeightDidChange: textView.frame.height)
+            delegate.recipeDetailsCell(self, detailsHeightDidChange: textView.contentSize.height)
         }
         delegate.recipeDetailsCell(self, detailsDidChange: textView.text)
     }

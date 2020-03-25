@@ -14,9 +14,9 @@
         "package": "StaticTableView",
         "repositoryURL": "https://github.com/amazeyh2015/StaticTableView.git",
         "state": {
-          "branch": null,
-          "revision": "30c36d4c71d59551e313cd751c5a1f21c4eecdab",
-          "version": "1.1.2"
+          "branch": "master",
+          "revision": "d9d32a0c83370edf45252d29d0bea49ca0b1f076",
+          "version": null
         }
       }
     ]

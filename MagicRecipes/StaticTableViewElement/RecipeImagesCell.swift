@@ -35,7 +35,7 @@ class RecipeImagesCell: StaticTableViewCell {
     init() {
         super.init(frame: .zero)
         
-        backgroundColor = .systemBackground
+        backgroundColor = .tertiarySystemBackground
         preservesSuperviewLayoutMargins = true
         
         scrollView = UIScrollView()
