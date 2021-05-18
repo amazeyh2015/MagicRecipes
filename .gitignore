@@ -1,0 +1,11 @@
+# macOS file system
+.DS_store
+
+# Xcode user settings
+xcuserdata/
+
+# Xcode workspace
+*.xcworkspace
+
+# CocoaPods dependencies
+Pods/
